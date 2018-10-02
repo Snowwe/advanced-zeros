@@ -1,15 +1,29 @@
 module.exports = function getZerosCount(number, base) {
-    if (number < 0)
-        return false;
-    else {
-        let result = 1;
-        for (let i = 10; i <= number; ++i) {
-            let temp = i;
-            while (temp % 5 === 0) {
-                temp /= 5;
-                ++result;
-            }
+    let result = number;
+    let temp = base;
+
+    for (let i = 2; i <= base; ++i) {
+        let tempCount = 0
+            , count = 0
+            , numbers = number;
+
+        if (temp % i) {
+            continue;
         }
-        return result;
+
+        while (!(temp % i)) {
+            temp = Math.floor(temp / i);
+            tempCount++;
+        }
+
+        while (numbers / i > 0) {
+            count += Math.floor(numbers / i);
+            numbers = Math.floor(numbers / i);
+        }
+
+        result = Math.min(result, Math.floor(count / tempCount));
+
     }
+    return result;
+
 };
